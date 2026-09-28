@@ -3,252 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#071c13">
+
 <title>TCMG Goussainville</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html{
-  scroll-behavior:smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  min-height:100vh;
-  background:#071c13;
-  color:white;
-  overflow-x:hidden;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: white;
+  background: #061b12;
 }
 
-.page{
-  width:100%;
-  max-width:520px;
-  min-height:100vh;
-  margin:auto;
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 10%,rgba(0,150,90,.18),transparent 35%),
-    #071c13;
+/* =========================
+   PAGE
+========================= */
+
+.page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 /* =========================
    TERRAIN DE TENNIS
 ========================= */
 
-.court{
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:900px;
-  height:600px;
-  opacity:.13;
-  pointer-events:none;
-  z-index:0;
-  animation:courtFloat 8s ease-in-out infinite;
+.court-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(32, 128, 72, 0.8),
+      rgba(4, 29, 19, 0.98) 75%
+    );
 }
 
-.court::before{
-  content:"";
-  position:absolute;
-  inset:70px 120px;
-  border:3px solid white;
-}
+/* terrain */
 
-.court::after{
-  content:"";
-  position:absolute;
-  top:70px;
-  bottom:70px;
-  left:50%;
-  width:3px;
-  background:white;
-  transform:translateX(-50%);
+.tennis-court {
+  position: absolute;
+  width: 145%;
+  height: 82%;
+  left: -22.5%;
+  top: 12%;
+  transform: perspective(650px) rotateX(58deg);
+  transform-origin: center center;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.04),
+      rgba(255,255,255,.02)
+    ),
+    #157447;
+
+  border: 5px solid rgba(255,255,255,.7);
+
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.1);
+    0 0 0 12px rgba(7, 50, 29, .8),
+    0 0 80px rgba(0,0,0,.6);
 }
 
-.line1,
-.line2,
-.line3,
-.line4{
-  position:absolute;
-  background:white;
+/* lignes verticales */
+
+.court-line {
+  position: absolute;
+  background: rgba(255,255,255,.85);
 }
 
-.line1{
-  left:120px;
-  right:120px;
-  top:50%;
-  height:3px;
+/* ligne centrale */
+
+.center-line {
+  width: 4px;
+  height: 100%;
+  left: 50%;
+  top: 0;
 }
 
-.line2{
-  left:220px;
-  top:70px;
-  bottom:70px;
-  width:3px;
+/* ligne de service gauche */
+
+.service-left {
+  width: 4px;
+  height: 42%;
+  left: 30%;
+  top: 29%;
 }
 
-.line3{
-  right:220px;
-  top:70px;
-  bottom:70px;
-  width:3px;
+/* ligne de service droite */
+
+.service-right {
+  width: 4px;
+  height: 42%;
+  right: 30%;
+  top: 29%;
 }
 
-.line4{
-  left:120px;
-  right:120px;
-  top:34%;
-  height:3px;
+/* lignes horizontales */
+
+.baseline-top {
+  width: 100%;
+  height: 4px;
+  left: 0;
+  top: 0;
 }
 
-@keyframes courtFloat{
-  0%,100%{
-    transform:translateX(-50%) scale(1);
-  }
-  50%{
-    transform:translateX(-50%) scale(1.025);
-  }
+.baseline-bottom {
+  width: 100%;
+  height: 4px;
+  left: 0;
+  bottom: 0;
 }
 
-/* =========================
-   HERO
-========================= */
+.service-top {
+  width: 100%;
+  height: 4px;
+  left: 0;
+  top: 29%;
+}
 
-.hero{
-  min-height:470px;
-  position:relative;
-  z-index:1;
-  padding:30px 22px 55px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  text-align:center;
+.service-bottom {
+  width: 100%;
+  height: 4px;
+  left: 0;
+  top: 71%;
+}
+
+/* filet */
+
+.net {
+  position: absolute;
+  width: 100%;
+  height: 16px;
+  top: 50%;
+  left: 0;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.7) 0,
+      rgba(255,255,255,.7) 2px,
+      transparent 2px,
+      transparent 8px
+    );
+
+  border-top: 3px solid white;
+  border-bottom: 3px solid rgba(255,255,255,.5);
+
+  box-shadow: 0 4px 8px rgba(0,0,0,.5);
+}
+
+/* poteaux du filet */
+
+.net::before,
+.net::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 130px;
+  top: -55px;
+  background: #e9e9e9;
+  border-radius: 5px;
+}
+
+.net::before {
+  left: -8px;
+}
+
+.net::after {
+  right: -8px;
+}
+
+/* voile sombre par-dessus le terrain */
+
+.court-overlay {
+  position: absolute;
+  inset: 0;
 
   background:
     linear-gradient(
       180deg,
-      rgba(4,24,15,.18),
-      rgba(4,24,15,.35) 45%,
-      #071c13 100%
+      rgba(2,13,8,.4),
+      rgba(2,18,11,.55)
     );
 }
 
-/* lumière animée */
-
-.hero::before{
-  content:"";
-  position:absolute;
-  width:280px;
-  height:280px;
-  border-radius:50%;
-  background:rgba(0,190,110,.12);
-  filter:blur(70px);
-  top:80px;
-  left:50%;
-  transform:translateX(-50%);
-  animation:glow 5s ease-in-out infinite;
-}
-
-@keyframes glow{
-  0%,100%{
-    opacity:.5;
-    transform:translateX(-50%) scale(1);
-  }
-  50%{
-    opacity:1;
-    transform:translateX(-50%) scale(1.2);
-  }
-}
-
 /* =========================
-   LOGO
+   BALLE QUI REBONDIT
 ========================= */
 
-.club-logo{
-  position:relative;
-  z-index:2;
-  width:125px;
-  height:125px;
-  margin:0 auto 18px;
-  border-radius:50%;
-  object-fit:cover;
-  background:white;
-  padding:7px;
+.bouncing-ball {
+  position: absolute;
+
+  width: 38px;
+  height: 38px;
+
+  left: 50%;
+  top: 43%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      #faffaa,
+      #dce94b 55%,
+      #9dbb16 100%
+    );
+
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.35),
-    0 15px 50px rgba(0,0,0,.35);
-  animation:
-    logoAppear .9s cubic-bezier(.2,.8,.2,1),
-    logoFloat 4s ease-in-out 1s infinite;
+    0 8px 15px rgba(0,0,0,.35),
+    0 0 15px rgba(230,245,80,.35);
+
+  z-index: 4;
+
+  animation: bounce 2.1s infinite ease-in-out;
 }
 
-@keyframes logoAppear{
-  0%{
-    opacity:0;
-    transform:scale(.5) rotate(-15deg);
+/* couture de la balle */
+
+.bouncing-ball::before {
+  content: "";
+  position: absolute;
+
+  width: 18px;
+  height: 32px;
+
+  left: 8px;
+  top: 3px;
+
+  border-right: 3px solid rgba(255,255,255,.8);
+
+  border-radius: 50%;
+
+  transform: rotate(25deg);
+}
+
+/* animation */
+
+@keyframes bounce {
+
+  0% {
+    transform:
+      translate(-50%, -180px)
+      rotate(0deg);
   }
-  100%{
-    opacity:1;
-    transform:scale(1) rotate(0);
+
+  45% {
+    transform:
+      translate(-50%, 70px)
+      rotate(220deg);
   }
-}
 
-@keyframes logoFloat{
-  0%,100%{
-    transform:translateY(0);
+  55% {
+    transform:
+      translate(-50%, 70px)
+      rotate(270deg);
   }
-  50%{
-    transform:translateY(-8px);
-  }
-}
 
-.eyebrow{
-  position:relative;
-  z-index:2;
-  font-size:12px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:#8ed8b4;
-  font-weight:700;
-  animation:fadeUp .8s .15s both;
-}
-
-h1{
-  position:relative;
-  z-index:2;
-  margin-top:8px;
-  font-size:48px;
-  line-height:.95;
-  letter-spacing:-2.5px;
-  animation:fadeUp .8s .25s both;
-}
-
-.subtitle{
-  position:relative;
-  z-index:2;
-  margin-top:14px;
-  color:#b7c9bf;
-  font-size:15px;
-  animation:fadeUp .8s .4s both;
-}
-
-@keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(25px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
+  100% {
+    transform:
+      translate(-50%, -180px)
+      rotate(360deg);
   }
 }
 
@@ -256,254 +285,435 @@ h1{
    CONTENU
 ========================= */
 
-.content{
-  position:relative;
-  z-index:3;
-  padding:0 18px 35px;
+.content {
+  position: relative;
+  z-index: 10;
+
+  width: 100%;
+  max-width: 540px;
+
+  margin: auto;
+
+  padding:
+    35px
+    20px
+    50px;
 }
 
 /* =========================
-   WELCOME
+   LOGO CLUB
 ========================= */
 
-.welcome{
-  padding:21px;
-  border-radius:24px;
-  background:rgba(255,255,255,.075);
-  border:1px solid rgba(255,255,255,.1);
-  backdrop-filter:blur(15px);
-  box-shadow:0 20px 50px rgba(0,0,0,.18);
-  animation:fadeUp .8s .5s both;
-}
+.club-logo {
+  width: 105px;
+  height: 105px;
 
-.welcome strong{
-  font-size:19px;
-}
+  object-fit: contain;
 
-.welcome p{
-  margin-top:8px;
-  color:#aebdb5;
-  font-size:14px;
-  line-height:1.55;
-}
+  display: block;
 
-/* =========================
-   BOUTONS
-========================= */
+  margin: 0 auto 18px;
 
-.links{
-  display:grid;
-  gap:13px;
-  margin-top:16px;
-}
+  background: white;
 
-.btn{
-  position:relative;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-height:75px;
-  padding:14px 16px;
-  border-radius:20px;
-  color:#102018;
-  text-decoration:none;
-  background:#f8f5ec;
+  padding: 7px;
+
+  border-radius: 50%;
+
   box-shadow:
-    0 12px 30px rgba(0,0,0,.2);
-  overflow:hidden;
+    0 15px 40px rgba(0,0,0,.45);
+
+  animation: logoAppear .8s ease-out;
+}
+
+@keyframes logoAppear {
+
+  from {
+    opacity: 0;
+    transform: scale(.7) rotate(-10deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* =========================
+   TITRE
+========================= */
+
+.header {
+  text-align: center;
+
+  margin-bottom: 28px;
+
+  animation: titleAppear .9s ease-out;
+}
+
+@keyframes titleAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header small {
+  display: block;
+
+  font-size: 13px;
+
+  letter-spacing: 4px;
+
+  text-transform: uppercase;
+
+  color: #b8c9bd;
+
+  margin-bottom: 8px;
+}
+
+.header h1 {
+  font-size: 45px;
+
+  line-height: .95;
+
+  letter-spacing: -2px;
+
+  font-weight: 900;
+
+  text-shadow:
+    0 4px 20px rgba(0,0,0,.5);
+}
+
+.header h1 span {
+  display: block;
+
+  color: #d8e85b;
+
+  font-size: 27px;
+
+  margin-top: 10px;
+
+  letter-spacing: 1px;
+}
+
+.header p {
+  margin-top: 13px;
+
+  font-size: 14px;
+
+  color: #d3ddd7;
+}
+
+/* =========================
+   CARTE INTRO
+========================= */
+
+.intro {
+  padding: 18px 20px;
+
+  margin-bottom: 15px;
+
+  text-align: center;
+
+  border-radius: 22px;
+
+  background:
+    rgba(5, 28, 17, .72);
+
+  border:
+    1px solid rgba(255,255,255,.15);
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 15px 35px rgba(0,0,0,.25);
+}
+
+.intro strong {
+  font-size: 17px;
+}
+
+.intro p {
+  color: #b9c8bf;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  margin-top: 5px;
+}
+
+/* =========================
+   LIENS
+========================= */
+
+.links {
+  display: grid;
+
+  gap: 13px;
+}
+
+/* bouton */
+
+.btn {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  min-height: 72px;
+
+  padding: 12px 16px;
+
+  color: #17221b;
+
+  text-decoration: none;
+
+  background: #f5f0e3;
+
+  border-radius: 19px;
+
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.28);
+
   transition:
     transform .25s ease,
-    box-shadow .25s ease;
-  animation:buttonAppear .7s both;
+    box-shadow .25s ease,
+    background .25s ease;
+
+  animation:
+    cardAppear .7s both;
 }
 
-.btn:nth-child(1){animation-delay:.65s}
-.btn:nth-child(2){animation-delay:.75s}
-.btn:nth-child(3){animation-delay:.85s}
-.btn:nth-child(4){animation-delay:.95s}
-.btn:nth-child(5){animation-delay:1.05s}
+.btn:nth-child(1) {
+  animation-delay: .15s;
+}
 
-@keyframes buttonAppear{
-  from{
-    opacity:0;
-    transform:translateY(25px);
+.btn:nth-child(2) {
+  animation-delay: .25s;
+}
+
+.btn:nth-child(3) {
+  animation-delay: .35s;
+}
+
+.btn:nth-child(4) {
+  animation-delay: .45s;
+}
+
+.btn:nth-child(5) {
+  animation-delay: .55s;
+}
+
+@keyframes cardAppear {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(25px);
   }
-  to{
-    opacity:1;
-    transform:translateY(0);
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
   }
 }
 
-.btn::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:60%;
-  height:100%;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,.55),
-    transparent
-  );
-  transform:skewX(-20deg);
-  transition:.7s;
-}
+.btn:hover {
+  transform:
+    translateY(-5px)
+    scale(1.015);
 
-.btn:hover::before{
-  left:130%;
-}
-
-.btn:hover{
-  transform:translateY(-4px) scale(1.01);
   box-shadow:
-    0 18px 38px rgba(0,0,0,.3);
+    0 18px 35px rgba(0,0,0,.38);
 }
 
-.btn:active{
-  transform:scale(.97);
+.btn:active {
+  transform:
+    scale(.97);
 }
 
-.icon{
-  width:46px;
-  height:46px;
-  min-width:46px;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  background:#e7ebe4;
-  overflow:hidden;
+/* icône */
+
+.icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  border-radius: 15px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #14251b;
+
+  color: white;
+
+  overflow: hidden;
 }
 
-.icon svg{
-  width:25px;
-  height:25px;
+/* SVG */
+
+.icon svg {
+  width: 25px;
+  height: 25px;
+
+  fill: currentColor;
 }
 
-.btn-text{
-  flex:1;
+/* texte */
+
+.btn-text {
+  flex: 1;
 }
 
-.btn b{
-  display:block;
-  font-size:16px;
+.btn-text b {
+  display: block;
+
+  font-size: 16px;
+
+  font-weight: 800;
 }
 
-.btn span{
-  display:block;
-  margin-top:3px;
-  color:#68756e;
-  font-size:12px;
+.btn-text span {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 12px;
+
+  color: #747b75;
 }
 
-.arrow{
-  font-size:25px;
-  color:#7a857e;
-  transition:transform .25s ease;
+/* flèche */
+
+.arrow {
+  font-size: 28px;
+
+  color: #68716a;
+
+  transition:
+    transform .2s ease;
 }
 
-.btn:hover .arrow{
-  transform:translateX(5px);
-}
-
-/* =========================
-   BOUTON TENUP
-========================= */
-
-.tenup{
-  background:linear-gradient(135deg,#ffffff,#edf8f2);
-}
-
-.tenup .icon{
-  background:#0b8f57;
-  color:white;
-}
-
-.tenup .arrow{
-  color:#0b8f57;
+.btn:hover .arrow {
+  transform:
+    translateX(5px);
 }
 
 /* =========================
    SECTION CLUB
 ========================= */
 
-.section{
-  margin-top:28px;
-  margin-bottom:11px;
-  color:#9fc5b2;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:2px;
-  font-weight:700;
-  animation:fadeUp .8s 1.1s both;
+.section-title {
+  margin-top: 28px;
+
+  margin-bottom: 10px;
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  color: #b7c5bd;
 }
 
-.info{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:11px;
+.info {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
 }
 
-.card{
-  padding:18px;
-  min-height:105px;
-  border-radius:20px;
-  background:rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(10px);
-  animation:fadeUp .8s 1.2s both;
-  transition:.25s ease;
+.card {
+  padding: 17px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(7,29,18,.72);
+
+  border:
+    1px solid rgba(255,255,255,.1);
+
+  backdrop-filter: blur(10px);
 }
 
-.card:nth-child(2){
-  animation-delay:1.3s;
+.card-icon {
+  font-size: 24px;
+
+  margin-bottom: 8px;
 }
 
-.card:hover{
-  transform:translateY(-4px);
-  background:rgba(255,255,255,.08);
+.card b {
+  font-size: 13px;
 }
 
-.card .big{
-  font-size:26px;
-}
+.card p {
+  color: #94a49a;
 
-.card p{
-  margin-top:8px;
-  color:#93a49b;
-  font-size:12px;
-  line-height:1.4;
+  font-size: 11px;
+
+  line-height: 1.4;
+
+  margin-top: 4px;
 }
 
 /* =========================
    FOOTER
 ========================= */
 
-footer{
-  text-align:center;
-  color:#5f756a;
-  font-size:11px;
-  padding:28px 0 10px;
+footer {
+  text-align: center;
+
+  padding-top: 30px;
+
+  color: #829188;
+
+  font-size: 11px;
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:360px){
+@media (max-width: 380px) {
 
-  h1{
-    font-size:40px;
+  .content {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
-  .hero{
-    min-height:430px;
+  .header h1 {
+    font-size: 39px;
   }
 
-  .club-logo{
-    width:105px;
-    height:105px;
+  .header h1 span {
+    font-size: 23px;
+  }
+
+  .club-logo {
+    width: 90px;
+    height: 90px;
   }
 }
 </style>
@@ -511,57 +721,94 @@ footer{
 
 <body>
 
-<main class="page">
+<div class="page">
 
-  <!-- TERRAIN DE TENNIS EN ARRIÈRE-PLAN -->
-  <div class="court">
-    <div class="line1"></div>
-    <div class="line2"></div>
-    <div class="line3"></div>
-    <div class="line4"></div>
+  <!-- =====================
+       TERRAIN EN ARRIÈRE-PLAN
+  ====================== -->
+
+  <div class="court-background">
+
+    <div class="tennis-court">
+
+      <div class="court-line center-line"></div>
+
+      <div class="court-line service-left"></div>
+      <div class="court-line service-right"></div>
+
+      <div class="court-line baseline-top"></div>
+      <div class="court-line baseline-bottom"></div>
+
+      <div class="court-line service-top"></div>
+      <div class="court-line service-bottom"></div>
+
+      <div class="net"></div>
+
+    </div>
+
+    <div class="court-overlay"></div>
+
+    <!-- BALLE -->
+    <div class="bouncing-ball"></div>
+
   </div>
 
-  <!-- HERO -->
-  <section class="hero">
 
-    <!-- TON VRAI LOGO TCMG -->
+  <!-- =====================
+       CONTENU
+  ====================== -->
+
+  <main class="content">
+
+    <!-- LOGO TCMG -->
     <img
       class="club-logo"
       src="670f76a8a5dd8_LogoTCMG.jpg"
       alt="Logo TCMG Goussainville"
     >
 
-    <div class="eyebrow">
-      Tennis Club Municipal
-    </div>
 
-    <h1>
-      TCMG<br>
-      Goussainville
-    </h1>
+    <!-- TITRE -->
 
-    <p class="subtitle">
-      Notre club · nos terrains · notre communauté
-    </p>
+    <header class="header">
 
-  </section>
+      <small>Tennis Club</small>
 
+      <h1>
+        TCMG
+        <span>Goussainville</span>
+      </h1>
 
-  <!-- CONTENU -->
-  <section class="content">
-
-    <div class="welcome">
-      <strong>Bienvenue au TCMG Goussainville 👋</strong>
       <p>
-        Retrouve ici tous les liens du club,
-        nos réseaux sociaux et la réservation des terrains.
+        Notre club, notre passion, notre communauté 🎾
       </p>
+
+    </header>
+
+
+    <!-- INTRO -->
+
+    <div class="intro">
+
+      <strong>Bienvenue au TCMG 👋</strong>
+
+      <p>
+        Retrouvez tous les liens utiles du club
+        et réservez facilement votre terrain.
+      </p>
+
     </div>
 
+
+    <!-- =====================
+         LIENS
+    ====================== -->
 
     <div class="links">
 
+
       <!-- INSTAGRAM -->
+
       <a
         class="btn"
         href="https://www.instagram.com/tcm_goussainville"
@@ -571,31 +818,8 @@ footer{
 
         <div class="icon">
 
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect
-              x="3"
-              y="3"
-              width="18"
-              height="18"
-              rx="5"
-              stroke="#E1306C"
-              stroke-width="2"
-            />
-
-            <circle
-              cx="12"
-              cy="12"
-              r="4"
-              stroke="#E1306C"
-              stroke-width="2"
-            />
-
-            <circle
-              cx="17.5"
-              cy="6.5"
-              r="1.2"
-              fill="#E1306C"
-            />
+          <svg viewBox="0 0 24 24">
+            <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.25-3.25a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
           </svg>
 
         </div>
@@ -611,6 +835,7 @@ footer{
 
 
       <!-- TIKTOK -->
+
       <a
         class="btn"
         href="https://www.tiktok.com/@tcm.goussainville"
@@ -621,12 +846,7 @@ footer{
         <div class="icon">
 
           <svg viewBox="0 0 24 24">
-
-            <path
-              fill="#111"
-              d="M15.2 3h3.1c.2 1.8 1.2 3.3 2.7 4.1v3.1c-1.4-.1-2.8-.6-3.9-1.4v6.8c0 3.2-2.6 5.4-5.7 5.4-2.9 0-5.3-2.2-5.3-5 0-3 2.4-5.2 5.5-5.2.4 0 .8 0 1.2.1v3.1c-.4-.1-.7-.2-1.1-.2-1.2 0-2.2.8-2.2 2.1 0 1.2 1 2 2.1 2 1.4 0 2.4-.9 2.4-2.5V3z"
-            />
-
+            <path d="M16.6 3c.3 2.4 1.6 3.8 4 4v3.2c-1.5.1-2.8-.3-4-1v6.1c0 5-5.4 7.3-9 4.3-2.3-1.9-2.4-5.5-.3-7.6 1.2-1.2 2.7-1.7 4.3-1.5v3.3c-2.4-.8-3.9 1.9-2.2 3.4 1.2 1 3.9.4 3.9-1.8V3h3.3z"/>
           </svg>
 
         </div>
@@ -642,6 +862,7 @@ footer{
 
 
       <!-- FACEBOOK -->
+
       <a
         class="btn"
         href="https://www.facebook.com/ftcmg/"
@@ -652,19 +873,7 @@ footer{
         <div class="icon">
 
           <svg viewBox="0 0 24 24">
-
-            <circle
-              cx="12"
-              cy="12"
-              r="10"
-              fill="#1877F2"
-            />
-
-            <path
-              fill="white"
-              d="M13.4 19v-6h2l.3-2.3h-2.3V9.2c0-.7.2-1.2 1.2-1.2h1.2V5.9c-.2 0-.9-.1-1.7-.1-1.8 0-3.1 1.1-3.1 3.2v1.7H9v2.3h2v6z"
-            />
-
+            <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.5 1.6-1.5h1.7V4.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V11H8v3h2.6v8h2.9z"/>
           </svg>
 
         </div>
@@ -680,6 +889,7 @@ footer{
 
 
       <!-- BOUTIQUE -->
+
       <a
         class="btn"
         href="https://www.trainingaddict-shop.com/categorie-produit/clubs-tcmg/"
@@ -689,28 +899,15 @@ footer{
 
         <div class="icon">
 
-          <svg viewBox="0 0 24 24" fill="none">
-
-            <path
-              d="M5 8h14l-1 12H6L5 8Z"
-              stroke="#18251E"
-              stroke-width="2"
-            />
-
-            <path
-              d="M9 8a3 3 0 0 1 6 0"
-              stroke="#18251E"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
-
+          <svg viewBox="0 0 24 24">
+            <path d="M7 4h10l2 4v12H5V8l2-4zm1.2 2-1 2h9.6l-1-2H8.2zM7 10v8h10v-8H7zm2 2h6v2H9v-2z"/>
           </svg>
 
         </div>
 
         <div class="btn-text">
           <b>Boutique du club</b>
-          <span>Tenues et équipements TCMG</span>
+          <span>Maillots & équipements</span>
         </div>
 
         <div class="arrow">›</div>
@@ -718,9 +915,10 @@ footer{
       </a>
 
 
-      <!-- TEN'UP -->
+      <!-- TENUP -->
+
       <a
-        class="btn tenup"
+        class="btn"
         href="https://tenup.fft.fr/"
         target="_blank"
         rel="noopener"
@@ -728,30 +926,9 @@ footer{
 
         <div class="icon">
 
-          <svg viewBox="0 0 24 24" fill="none">
-
-            <circle
-              cx="12"
-              cy="12"
-              r="10"
-              fill="white"
-              opacity=".95"
-            />
-
-            <path
-              d="M8 7c2.5 1.5 5.5 1.5 8 0"
-              stroke="#0b8f57"
-              stroke-width="1.7"
-              stroke-linecap="round"
-            />
-
-            <path
-              d="M8 17c2.5-1.5 5.5-1.5 8 0"
-              stroke="#0b8f57"
-              stroke-width="1.7"
-              stroke-linecap="round"
-            />
-
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M7 9c2.8 2 7.2 2 10 0M7 15c2.8-2 7.2-2 10 0" fill="none" stroke="currentColor" stroke-width="1.5"/>
           </svg>
 
         </div>
@@ -768,39 +945,51 @@ footer{
     </div>
 
 
-    <!-- INFORMATIONS -->
-    <div class="section">
+    <!-- INFOS CLUB -->
+
+    <div class="section-title">
       Le club
     </div>
 
     <div class="info">
 
       <div class="card">
-        <div class="big">🎾</div>
+
+        <div class="card-icon">🎾</div>
+
+        <b>Pratique du tennis</b>
+
         <p>
-          Entraînements<br>
-          et pratique du tennis
+          Entraînements et séances
+          pour tous les niveaux.
         </p>
+
       </div>
 
+
       <div class="card">
-        <div class="big">🏆</div>
+
+        <div class="card-icon">🏆</div>
+
+        <b>Compétitions</b>
+
         <p>
-          Compétitions<br>
-          et tournois
+          Tournois, matchs et
+          événements du club.
         </p>
+
       </div>
 
     </div>
 
 
     <footer>
-      TCMG Goussainville · Page officielle du club
+      TCMG Goussainville · Tennis Club Municipal
     </footer>
 
-  </section>
+  </main>
 
-</main>
+</div>
 
 </body>
 </html>
