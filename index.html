@@ -1,123 +1,557 @@
 <!DOCTYPE html><html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07111f">
-<title>TCMG Goussainville — Tennis</title>
-<style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    min-height:100vh;color:#fff;background:#07111f;
-    display:flex;justify-content:center;
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCMG Goussainville</title><style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #071d13;
+  color: #10251b;
+  overflow-x: hidden;
+}
+
+/* =========================
+   TERRAIN DE TENNIS
+========================= */
+
+.page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      rgba(5, 35, 22, 0.18),
+      rgba(3, 25, 16, 0.48)
+    ),
+    #0d4b2e;
+}
+
+/* Lignes du terrain */
+
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    /* ligne extérieure gauche */
+    linear-gradient(
+      90deg,
+      transparent 7%,
+      rgba(255,255,255,.55) 7.2%,
+      rgba(255,255,255,.55) 7.5%,
+      transparent 7.7%
+    ),
+
+    /* ligne extérieure droite */
+    linear-gradient(
+      90deg,
+      transparent 92.3%,
+      rgba(255,255,255,.55) 92.5%,
+      rgba(255,255,255,.55) 92.8%,
+      transparent 93%
+    ),
+
+    /* ligne horizontale haute */
+    linear-gradient(
+      0deg,
+      transparent 19%,
+      rgba(255,255,255,.55) 19.2%,
+      rgba(255,255,255,.55) 19.5%,
+      transparent 19.7%
+    ),
+
+    /* ligne horizontale basse */
+    linear-gradient(
+      0deg,
+      transparent 80.3%,
+      rgba(255,255,255,.55) 80.5%,
+      rgba(255,255,255,.55) 80.8%,
+      transparent 81%
+    ),
+
+    /* ligne centrale */
+    linear-gradient(
+      90deg,
+      transparent 49.7%,
+      rgba(255,255,255,.42) 49.8%,
+      rgba(255,255,255,.42) 50.2%,
+      transparent 50.3%
+    ),
+
+    /* lignes de service */
+    linear-gradient(
+      0deg,
+      transparent 37%,
+      rgba(255,255,255,.42) 37.2%,
+      rgba(255,255,255,.42) 37.5%,
+      transparent 37.7%
+    ),
+
+    linear-gradient(
+      0deg,
+      transparent 62.3%,
+      rgba(255,255,255,.42) 62.5%,
+      rgba(255,255,255,.42) 62.8%,
+      transparent 63%
+    );
+
+  opacity: .7;
+  pointer-events: none;
+}
+
+/* texture du terrain */
+
+.page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      ellipse at 20% 20%,
+      rgba(255,255,255,.08),
+      transparent 30%
+    ),
+    radial-gradient(
+      ellipse at 80% 65%,
+      rgba(0,0,0,.25),
+      transparent 35%
+    ),
+    repeating-linear-gradient(
+      115deg,
+      rgba(255,255,255,.015) 0px,
+      rgba(255,255,255,.015) 2px,
+      transparent 2px,
+      transparent 7px
+    );
+
+  pointer-events: none;
+}
+
+/* =========================
+   CONTENU
+========================= */
+
+.container {
+  width: 100%;
+  max-width: 560px;
+  min-height: 100vh;
+  margin: auto;
+  position: relative;
+  z-index: 2;
+
+  padding: 35px 18px 45px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  text-align: center;
+  color: white;
+  padding-top: 15px;
+  margin-bottom: 35px;
+}
+
+.ball {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 12px;
+
+  border-radius: 50%;
+
+  background: #d8ef42;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.3),
+    inset -8px -8px 15px rgba(0,0,0,.08);
+
+  position: relative;
+}
+
+/* couture de la balle */
+
+.ball::before,
+.ball::after {
+  content: "";
+  position: absolute;
+
+  width: 35px;
+  height: 65px;
+
+  border: 4px solid white;
+  border-left: none;
+
+  border-radius: 50%;
+}
+
+.ball::before {
+  left: 4px;
+  top: 5px;
+  transform: rotate(8deg);
+}
+
+.ball::after {
+  right: 4px;
+  top: 5px;
+  transform: rotate(-8deg);
+}
+
+.logo-title {
+  font-size: clamp(60px, 17vw, 92px);
+  line-height: .85;
+  font-weight: 900;
+  letter-spacing: -5px;
+
+  color: #fff8e8;
+
+  text-shadow:
+    0 7px 18px rgba(0,0,0,.28);
+}
+
+.city {
+  margin-top: 12px;
+
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  color: #f0a77e;
+}
+
+.tagline {
+  margin-top: 15px;
+
+  font-size: 17px;
+  letter-spacing: 1px;
+
+  color: rgba(255,255,255,.78);
+}
+
+/* =========================
+   BOUTONS
+========================= */
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.btn {
+  min-height: 92px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 14px 20px;
+
+  background: #fff8e9;
+  color: #11251b;
+
+  border-radius: 23px;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.20);
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 16px 35px rgba(0,0,0,.28);
+}
+
+.btn:active {
+  transform: scale(.985);
+}
+
+/* icône */
+
+.icon {
+  width: 58px;
+  height: 58px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 18px;
+
+  flex-shrink: 0;
+
+  font-size: 27px;
+
+  color: white;
+}
+
+.instagram {
+  background: linear-gradient(
+    135deg,
+    #833ab4,
+    #fd1d1d,
+    #fcb045
+  );
+}
+
+.tiktok {
+  background: #101714;
+}
+
+.facebook {
+  background: #1877f2;
+}
+
+.shop {
+  background: #d95d2d;
+}
+
+.tenup {
+  background: #a9c62d;
+}
+
+/* texte */
+
+.btn-content {
+  flex: 1;
+}
+
+.btn-title {
+  display: block;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.btn-subtitle {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 14px;
+  font-style: italic;
+
+  color: #778078;
+}
+
+.arrow {
+  font-size: 30px;
+  color: #6c7c72;
+  margin-left: 10px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+  margin-top: 30px;
+
+  text-align: center;
+
+  color: rgba(255,255,255,.55);
+
+  font-size: 12px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 400px) {
+
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
   }
-  .page{width:100%;max-width:520px;min-height:100vh;position:relative;overflow:hidden}
-  .hero{
-    min-height:330px;padding:28px 22px 34px;display:flex;flex-direction:column;
-    justify-content:flex-end;position:relative;
-    background:
-      linear-gradient(180deg,rgba(0,0,0,.08),rgba(3,10,20,.92)),
-      radial-gradient(circle at 70% 25%,#2c9b76 0,#123e4a 32%,#07111f 72%);
+
+  .logo-title {
+    font-size: 64px;
   }
-  .hero:after{
-    content:"";position:absolute;inset:auto -20% -110px;height:180px;
-    background:#07111f;border-radius:50% 50% 0 0/70% 70% 0 0;
+
+  .city {
+    font-size: 23px;
   }
-  .brand{position:absolute;top:24px;left:22px;right:22px;display:flex;align-items:center;gap:12px}
-  .logo{
-    width:54px;height:54px;border:2px solid rgba(255,255,255,.75);border-radius:50%;
-    display:grid;place-items:center;font-size:25px;background:rgba(255,255,255,.08);
-    backdrop-filter:blur(8px)
+
+  .tagline {
+    font-size: 15px;
   }
-  .eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:.72}
-  h1{font-size:42px;line-height:.95;letter-spacing:-1.8px;margin-top:8px}
-  .sub{font-size:15px;opacity:.8;margin-top:12px}
-  .content{padding:0 18px 30px;position:relative;z-index:2}
-  .welcome{
-    background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.09);
-    border-radius:22px;padding:20px;margin-bottom:14px;backdrop-filter:blur(10px)
+
+  .btn {
+    min-height: 82px;
+    padding: 12px 15px;
   }
-  .welcome strong{font-size:19px}.welcome p{color:#aeb9c8;font-size:14px;line-height:1.55;margin-top:7px}
-  .links{display:grid;gap:12px}
-  .btn{
-    display:flex;align-items:center;gap:14px;padding:16px 17px;border-radius:17px;
-    color:#08111d;text-decoration:none;background:#fff;
-    box-shadow:0 10px 28px rgba(0,0,0,.18);transition:.18s transform,.18s opacity
+
+  .icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 13px;
+    font-size: 23px;
   }
-  .btn:hover{transform:translateY(-2px)} .btn:active{transform:scale(.985)}
-  .icon{
-    width:42px;height:42px;border-radius:13px;background:#e9eef3;
-    display:grid;place-items:center;font-size:21px;flex:none
+
+  .btn-title {
+    font-size: 17px;
   }
-  .btn b{font-size:15px}.btn span{display:block;color:#667382;font-size:12px;margin-top:2px}
-  .arrow{margin-left:auto;font-size:20px;color:#788594}
-  .section{margin-top:22px;color:#c7d0db;font-size:12px;text-transform:uppercase;letter-spacing:1.6px}
-  .info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-  .card{padding:15px;border-radius:17px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.07)}
-  .card .big{font-size:22px}.card p{font-size:12px;color:#8f9aaa;margin-top:5px;line-height:1.35}
-  footer{text-align:center;color:#657286;font-size:11px;padding:24px 0 8px}
-  @media(max-width:360px){h1{font-size:36px}.hero{min-height:310px}}
-</style>
-</head>
-<body>
-<main class="page">
-  <section class="hero">
-    <div class="brand">
-      <div class="logo">🎾</div>
-      <div><div class="eyebrow">Tennis Club</div><div style="font-weight:700">TCMG</div></div>
+
+  .btn-subtitle {
+    font-size: 12px;
+  }
+}
+</style></head><body><div class="page">  <main class="container"><!-- HEADER -->
+<header class="header">
+
+  <div class="ball"></div>
+
+  <div class="logo-title">
+    TCMG
+  </div>
+
+  <div class="city">
+    Goussainville
+  </div>
+
+  <div class="tagline">
+    Notre club, sur les réseaux
+  </div>
+
+</header>
+
+
+<!-- LIENS -->
+<section class="links">
+
+  <!-- INSTAGRAM -->
+  <a
+    class="btn"
+    href="https://www.instagram.com/tcm_goussainville?stkn=dzRuNGljdDNucTA3"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+
+    <div class="icon instagram">
+      ◎
     </div>
-    <div>
-      <div class="eyebrow">Goussainville</div>
-      <h1>Le tennis<br>près de chez vous.</h1>
-      <p class="sub">Actualités · événements · communauté · tennis</p>
+
+    <div class="btn-content">
+      <span class="btn-title">Instagram</span>
+      <span class="btn-subtitle">@tcm_goussainville</span>
     </div>
-  </section>  <section class="content">
-    <div class="welcome">
-      <strong>Bienvenue au TCMG Goussainville 👋</strong>
-      <p>Retrouve ici tous les liens utiles du club. Scanne, choisis ton réseau et rejoins la communauté.</p>
-    </div><div class="links">
 
-  <a class="btn" href="https://www.instagram.com/tcm_goussainville?stkn=dzRuNGljdDNucTA3" target="_blank" rel="noopener">
-    <div class="icon">📸</div>
-    <div><b>Instagram</b><span>Photos, actus et vie du club</span></div>
     <div class="arrow">›</div>
+
   </a>
 
-  <a class="btn" href="https://www.tiktok.com/@tcm.goussainville?_r=1&_t=ZN-99s6utWII9G" target="_blank" rel="noopener">
-    <div class="icon">🎵</div>
-    <div><b>TikTok</b><span>Nos vidéos et moments forts</span></div>
+
+  <!-- TIKTOK -->
+  <a
+    class="btn"
+    href="https://www.tiktok.com/@tcm.goussainville?_r=1&_t=ZN-99s6utWII9G"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+
+    <div class="icon tiktok">
+      ♪
+    </div>
+
+    <div class="btn-content">
+      <span class="btn-title">TikTok</span>
+      <span class="btn-subtitle">@tcm.goussainville</span>
+    </div>
+
     <div class="arrow">›</div>
+
   </a>
 
-  <a class="btn" href="https://www.facebook.com/ftcmg/" target="_blank" rel="noopener">
-    <div class="icon">📘</div>
-    <div><b>Facebook</b><span>Retrouve aussi le club sur Facebook</span></div>
+
+  <!-- FACEBOOK -->
+  <a
+    class="btn"
+    href="https://www.facebook.com/ftcmg/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+
+    <div class="icon facebook">
+      f
+    </div>
+
+    <div class="btn-content">
+      <span class="btn-title">Facebook</span>
+      <span class="btn-subtitle">@ftcmg</span>
+    </div>
+
     <div class="arrow">›</div>
+
   </a>
 
-  <a class="btn" href="https://www.trainingaddict-shop.com/categorie-produit/clubs-tcmg/" target="_blank" rel="noopener">
-    <div class="icon">🛍️</div>
-    <div><b>Boutique du club</b><span>Tenues et équipements TCMG</span></div>
+
+  <!-- BOUTIQUE -->
+  <a
+    class="btn"
+    href="https://www.trainingaddict-shop.com/categorie-produit/clubs-tcmg/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+
+    <div class="icon shop">
+      🛍
+    </div>
+
+    <div class="btn-content">
+      <span class="btn-title">Boutique</span>
+      <span class="btn-subtitle">Maillots & équipements</span>
+    </div>
+
     <div class="arrow">›</div>
+
   </a>
 
-  <a class="btn" href="https://tenup.fft.fr/" target="_blank" rel="noopener">
-    <div class="icon">🎾</div>
-    <div><b>Réserver un terrain</b><span>Réserve ton court sur Ten’Up</span></div>
+
+  <!-- TEN'UP -->
+  <a
+    class="btn"
+    href="https://tenup.fft.fr/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+
+    <div class="icon tenup">
+      🎾
+    </div>
+
+    <div class="btn-content">
+      <span class="btn-title">Réserver un terrain</span>
+      <span class="btn-subtitle">Réservation sur Ten’Up</span>
+    </div>
+
     <div class="arrow">›</div>
+
   </a>
 
-</div>
+</section>
 
-<div class="section">Le club</div>
-<div class="info">
-  <div class="card"><div class="big">🎾</div><p>Entraînements<br>et pratique du tennis</p></div>
-  <div class="card"><div class="big">🏆</div><p>Compétitions<br>et tournois</p></div>
-</div>
 
-<footer>TCMG Goussainville · Page officielle du club</footer>
+<footer class="footer">
+  TCMG Goussainville · Tennis Club
+</footer>
 
-  </section>
-</main>
-</body>
+  </main></div></body>
 </html>
