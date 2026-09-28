@@ -1,23 +1,28 @@
 <!DOCTYPE html><html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCMG Goussainville</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07351f"><title>TCMG Goussainville</title><style>
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   min-height: 100vh;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #071d13;
-  color: #10251b;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", sans-serif;
+  background: #07351f;
   overflow-x: hidden;
 }
 
 /* =========================
-   TERRAIN DE TENNIS
+   TERRAIN
 ========================= */
 
 .page {
@@ -27,110 +32,69 @@ body {
 
   background:
     linear-gradient(
-      rgba(5, 35, 22, 0.18),
-      rgba(3, 25, 16, 0.48)
+      rgba(3, 32, 19, .15),
+      rgba(3, 32, 19, .48)
     ),
-    #0d4b2e;
+    #0d5a35;
 }
 
 /* Lignes du terrain */
 
-.page::before {
-  content: "";
+.court-lines {
   position: absolute;
   inset: 0;
-
-  background:
-    /* ligne extérieure gauche */
-    linear-gradient(
-      90deg,
-      transparent 7%,
-      rgba(255,255,255,.55) 7.2%,
-      rgba(255,255,255,.55) 7.5%,
-      transparent 7.7%
-    ),
-
-    /* ligne extérieure droite */
-    linear-gradient(
-      90deg,
-      transparent 92.3%,
-      rgba(255,255,255,.55) 92.5%,
-      rgba(255,255,255,.55) 92.8%,
-      transparent 93%
-    ),
-
-    /* ligne horizontale haute */
-    linear-gradient(
-      0deg,
-      transparent 19%,
-      rgba(255,255,255,.55) 19.2%,
-      rgba(255,255,255,.55) 19.5%,
-      transparent 19.7%
-    ),
-
-    /* ligne horizontale basse */
-    linear-gradient(
-      0deg,
-      transparent 80.3%,
-      rgba(255,255,255,.55) 80.5%,
-      rgba(255,255,255,.55) 80.8%,
-      transparent 81%
-    ),
-
-    /* ligne centrale */
-    linear-gradient(
-      90deg,
-      transparent 49.7%,
-      rgba(255,255,255,.42) 49.8%,
-      rgba(255,255,255,.42) 50.2%,
-      transparent 50.3%
-    ),
-
-    /* lignes de service */
-    linear-gradient(
-      0deg,
-      transparent 37%,
-      rgba(255,255,255,.42) 37.2%,
-      rgba(255,255,255,.42) 37.5%,
-      transparent 37.7%
-    ),
-
-    linear-gradient(
-      0deg,
-      transparent 62.3%,
-      rgba(255,255,255,.42) 62.5%,
-      rgba(255,255,255,.42) 62.8%,
-      transparent 63%
-    );
-
-  opacity: .7;
   pointer-events: none;
+  opacity: .6;
 }
 
-/* texture du terrain */
-
-.page::after {
+.court-lines::before {
   content: "";
+  position: absolute;
+  inset: 7%;
+  border: 3px solid rgba(255,255,255,.55);
+  border-radius: 2px;
+}
+
+.court-lines::after {
+  content: "";
+  position: absolute;
+
+  left: 7%;
+  right: 7%;
+  top: 50%;
+
+  height: 3px;
+
+  background: rgba(255,255,255,.48);
+
+  box-shadow:
+    0 -145px 0 rgba(255,255,255,.38),
+    0 145px 0 rgba(255,255,255,.38);
+}
+
+/* texture */
+
+.texture {
   position: absolute;
   inset: 0;
 
   background:
     radial-gradient(
-      ellipse at 20% 20%,
-      rgba(255,255,255,.08),
-      transparent 30%
+      circle at 15% 20%,
+      rgba(255,255,255,.09),
+      transparent 28%
     ),
     radial-gradient(
-      ellipse at 80% 65%,
-      rgba(0,0,0,.25),
+      circle at 85% 65%,
+      rgba(0,0,0,.24),
       transparent 35%
     ),
     repeating-linear-gradient(
       115deg,
-      rgba(255,255,255,.015) 0px,
-      rgba(255,255,255,.015) 2px,
+      rgba(255,255,255,.018) 0,
+      rgba(255,255,255,.018) 2px,
       transparent 2px,
-      transparent 7px
+      transparent 8px
     );
 
   pointer-events: none;
@@ -144,11 +108,13 @@ body {
   width: 100%;
   max-width: 560px;
   min-height: 100vh;
-  margin: auto;
-  position: relative;
-  z-index: 2;
 
-  padding: 35px 18px 45px;
+  margin: auto;
+
+  position: relative;
+  z-index: 3;
+
+  padding: 28px 18px 40px;
 }
 
 /* =========================
@@ -158,176 +124,254 @@ body {
 .header {
   text-align: center;
   color: white;
-  padding-top: 15px;
-  margin-bottom: 35px;
+
+  padding-top: 5px;
+  margin-bottom: 30px;
+
+  animation: headerAppear .8s ease both;
 }
 
-.ball {
-  width: 76px;
-  height: 76px;
-  margin: 0 auto 12px;
+/* vrai logo */
 
+.club-logo {
+  width: 90px;
+  height: 90px;
+
+  object-fit: contain;
+
+  margin: 0 auto 10px;
+
+  background: white;
   border-radius: 50%;
 
-  background: #d8ef42;
+  padding: 6px;
 
   box-shadow:
-    0 10px 30px rgba(0,0,0,.3),
-    inset -8px -8px 15px rgba(0,0,0,.08);
+    0 10px 30px rgba(0,0,0,.28);
 
-  position: relative;
+  animation: logoFloat 4s ease-in-out infinite;
 }
 
-/* couture de la balle */
-
-.ball::before,
-.ball::after {
-  content: "";
-  position: absolute;
-
-  width: 35px;
-  height: 65px;
-
-  border: 4px solid white;
-  border-left: none;
-
-  border-radius: 50%;
-}
-
-.ball::before {
-  left: 4px;
-  top: 5px;
-  transform: rotate(8deg);
-}
-
-.ball::after {
-  right: 4px;
-  top: 5px;
-  transform: rotate(-8deg);
-}
+/* TCMG */
 
 .logo-title {
-  font-size: clamp(60px, 17vw, 92px);
-  line-height: .85;
-  font-weight: 900;
+  font-size: clamp(58px, 17vw, 90px);
+
+  line-height: .82;
+
+  font-weight: 950;
+
   letter-spacing: -5px;
 
-  color: #fff8e8;
+  color: #fff7e8;
 
   text-shadow:
-    0 7px 18px rgba(0,0,0,.28);
+    0 8px 20px rgba(0,0,0,.3);
 }
 
 .city {
   margin-top: 12px;
 
   font-size: 26px;
-  font-weight: 700;
+
+  font-weight: 750;
+
   letter-spacing: 1px;
 
   color: #f0a77e;
 }
 
 .tagline {
-  margin-top: 15px;
+  margin-top: 13px;
 
-  font-size: 17px;
+  font-size: 16px;
+
   letter-spacing: 1px;
 
   color: rgba(255,255,255,.78);
 }
 
 /* =========================
-   BOUTONS
+   CARTES
 ========================= */
 
 .links {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 15px;
 }
 
 .btn {
-  min-height: 92px;
+  min-height: 88px;
 
   display: flex;
   align-items: center;
 
-  padding: 14px 20px;
+  padding: 13px 18px;
 
   background: #fff8e9;
+
   color: #11251b;
 
-  border-radius: 23px;
+  border-radius: 22px;
 
   text-decoration: none;
 
   box-shadow:
-    0 12px 30px rgba(0,0,0,.20);
+    0 12px 30px rgba(0,0,0,.2);
+
+  opacity: 0;
+
+  animation: cardAppear .65s cubic-bezier(.2,.8,.2,1) forwards;
 
   transition:
-    transform .18s ease,
-    box-shadow .18s ease;
+    transform .2s ease,
+    box-shadow .2s ease;
 }
 
+.btn:nth-child(1) { animation-delay: .15s; }
+.btn:nth-child(2) { animation-delay: .25s; }
+.btn:nth-child(3) { animation-delay: .35s; }
+.btn:nth-child(4) { animation-delay: .45s; }
+.btn:nth-child(5) { animation-delay: .55s; }
+
 .btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px) scale(1.01);
 
   box-shadow:
-    0 16px 35px rgba(0,0,0,.28);
+    0 18px 38px rgba(0,0,0,.3);
 }
 
 .btn:active {
-  transform: scale(.985);
+  transform: scale(.97);
 }
 
-/* icône */
+/* =========================
+   LOGOS APPLICATIONS
+========================= */
 
 .icon {
-  width: 58px;
-  height: 58px;
+  width: 57px;
+  height: 57px;
 
-  border-radius: 50%;
+  border-radius: 17px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-right: 18px;
+  margin-right: 17px;
 
   flex-shrink: 0;
 
-  font-size: 27px;
+  overflow: hidden;
+
+  font-weight: 900;
+
+  font-size: 29px;
 
   color: white;
 }
 
+/* Instagram */
+
 .instagram {
-  background: linear-gradient(
-    135deg,
-    #833ab4,
-    #fd1d1d,
-    #fcb045
-  );
+  background:
+    radial-gradient(
+      circle at 30% 110%,
+      #fdf497 0%,
+      #fdf497 5%,
+      #fd5949 45%,
+      #d6249f 60%,
+      #285AEB 90%
+    );
 }
 
-.tiktok {
-  background: #101714;
+/* faux logo Instagram */
+
+.instagram-logo {
+  width: 30px;
+  height: 30px;
+
+  border: 3px solid white;
+
+  border-radius: 9px;
+
+  position: relative;
 }
+
+.instagram-logo::before {
+  content: "";
+
+  position: absolute;
+
+  width: 10px;
+  height: 10px;
+
+  border: 3px solid white;
+
+  border-radius: 50%;
+
+  left: 7px;
+  top: 7px;
+}
+
+.instagram-logo::after {
+  content: "";
+
+  position: absolute;
+
+  width: 4px;
+  height: 4px;
+
+  background: white;
+
+  border-radius: 50%;
+
+  right: 3px;
+  top: 3px;
+}
+
+/* TikTok */
+
+.tiktok {
+  background: #050505;
+}
+
+.tiktok-logo {
+  font-size: 32px;
+  font-weight: 900;
+  text-shadow:
+    3px 2px 0 #25f4ee,
+    -2px -1px 0 #fe2c55;
+}
+
+/* Facebook */
 
 .facebook {
   background: #1877f2;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 36px;
+  font-weight: 900;
 }
 
+/* Boutique */
+
 .shop {
-  background: #d95d2d;
+  background: #d45b2d;
 }
+
+/* TenUp */
 
 .tenup {
   background: #a9c62d;
 }
 
-/* texte */
+/* =========================
+   TEXTE
+========================= */
 
 .btn-content {
   flex: 1;
@@ -336,25 +380,33 @@ body {
 .btn-title {
   display: block;
 
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 19px;
+
+  font-weight: 850;
 }
 
 .btn-subtitle {
   display: block;
 
-  margin-top: 5px;
+  margin-top: 4px;
 
-  font-size: 14px;
-  font-style: italic;
+  font-size: 13px;
 
-  color: #778078;
+  color: #788078;
 }
 
 .arrow {
-  font-size: 30px;
-  color: #6c7c72;
-  margin-left: 10px;
+  font-size: 31px;
+
+  color: #718077;
+
+  margin-left: 8px;
+
+  transition: transform .2s ease;
+}
+
+.btn:hover .arrow {
+  transform: translateX(5px);
 }
 
 /* =========================
@@ -362,13 +414,54 @@ body {
 ========================= */
 
 .footer {
-  margin-top: 30px;
+  margin-top: 27px;
 
   text-align: center;
 
   color: rgba(255,255,255,.55);
 
-  font-size: 12px;
+  font-size: 11px;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes headerAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes logoFloat {
+
+  0%,100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+}
+
+@keyframes cardAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* =========================
@@ -378,8 +471,13 @@ body {
 @media (max-width: 400px) {
 
   .container {
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  .club-logo {
+    width: 78px;
+    height: 78px;
   }
 
   .logo-title {
@@ -391,19 +489,18 @@ body {
   }
 
   .tagline {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .btn {
     min-height: 82px;
-    padding: 12px 15px;
+    padding: 11px 14px;
   }
 
   .icon {
-    width: 50px;
-    height: 50px;
+    width: 51px;
+    height: 51px;
     margin-right: 13px;
-    font-size: 23px;
   }
 
   .btn-title {
@@ -414,10 +511,17 @@ body {
     font-size: 12px;
   }
 }
-</style></head><body><div class="page">  <main class="container"><!-- HEADER -->
+</style></head><body><div class="page">  <div class="court-lines"></div>
+  <div class="texture"></div>  <main class="container"><!-- HEADER -->
+
 <header class="header">
 
-  <div class="ball"></div>
+  <!-- Mets logo-tcmg.png dans le même dossier que index.html -->
+  <img
+    src="logo-tcmg.png"
+    alt="Logo TCMG Goussainville"
+    class="club-logo"
+  >
 
   <div class="logo-title">
     TCMG
@@ -435,9 +539,11 @@ body {
 
 
 <!-- LIENS -->
+
 <section class="links">
 
   <!-- INSTAGRAM -->
+
   <a
     class="btn"
     href="https://www.instagram.com/tcm_goussainville?stkn=dzRuNGljdDNucTA3"
@@ -446,7 +552,7 @@ body {
   >
 
     <div class="icon instagram">
-      ◎
+      <div class="instagram-logo"></div>
     </div>
 
     <div class="btn-content">
@@ -460,6 +566,7 @@ body {
 
 
   <!-- TIKTOK -->
+
   <a
     class="btn"
     href="https://www.tiktok.com/@tcm.goussainville?_r=1&_t=ZN-99s6utWII9G"
@@ -468,7 +575,7 @@ body {
   >
 
     <div class="icon tiktok">
-      ♪
+      <div class="tiktok-logo">♪</div>
     </div>
 
     <div class="btn-content">
@@ -482,6 +589,7 @@ body {
 
 
   <!-- FACEBOOK -->
+
   <a
     class="btn"
     href="https://www.facebook.com/ftcmg/"
@@ -504,6 +612,7 @@ body {
 
 
   <!-- BOUTIQUE -->
+
   <a
     class="btn"
     href="https://www.trainingaddict-shop.com/categorie-produit/clubs-tcmg/"
@@ -512,7 +621,7 @@ body {
   >
 
     <div class="icon shop">
-      🛍
+      🛍️
     </div>
 
     <div class="btn-content">
@@ -526,6 +635,7 @@ body {
 
 
   <!-- TEN'UP -->
+
   <a
     class="btn"
     href="https://tenup.fft.fr/"
